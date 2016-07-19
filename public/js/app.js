@@ -62,6 +62,8 @@ function organizarMensaje(){
         })
       },
 
+      watchMessages: function() {},
+
       joinUser: function(user) {
         var self = this
         var endpoint = self.apiUrl + '/users'

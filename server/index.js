@@ -28,9 +28,11 @@ io.on('connection', function(socket) {
   })
 
   socket.on('disconnect', function(socket) {
-    deleteUser(socket.user, function(err, confirm) {
-      if (err) throw err
-    })
+    if (socket.user) {
+      deleteUser(socket.user, function(err, confirm) {
+        if (err) throw err
+      })
+    }
   })
 })
 

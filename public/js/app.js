@@ -29,13 +29,13 @@ function slideContactos(direction){
   if (desplegado==false) {
     if (direction=="left") {
       $(".right-side")
-      .removeClass("hide-on-small-only")
       .css({
         position: "absolute",
         zIndex: "3",
         right: "0px",
         display: "none"
       })
+      .removeClass("hide-on-small-only")
       .show("slide", { direction: "right" },300)
       desplegado=true;
     }
@@ -119,19 +119,18 @@ function slideContactos(direction){
 
       fetchUserInfo: function(callback) {
         var self = this
-        if (!localStorage.user) {
-          this.userDataModal.openModal()
-          var $GuardaInfo = $('.guardaInfo')
-          $GuardaInfo.on('click', function() {
-            var nombre = $('.nombreUsuario').val()
-            var user = [{nombre: nombre, img: 'p2.png'}]
-            self.socket.emit('userJoin', user[0])
-            callback(user)
-            localStorage.user = JSON.stringify(user)
-            self.joinUser(user[0])
-            self.userDataModal.closeModal()
-          })
-        }
+
+        this.userDataModal.openModal()
+        var $GuardaInfo = $('.guardaInfo')
+        $GuardaInfo.on('click', function() {
+          var nombre = $('.nombreUsuario').val()
+          var user = [{nombre: nombre, img: 'p2.png'}]
+          self.socket.emit('userJoin', user[0])
+          callback(user)
+          self.joinUser(user[0])
+          self.userDataModal.closeModal()
+        })
+
         self.getInitialUsers()
       }
     }
@@ -143,13 +142,15 @@ function slideContactos(direction){
 var desplegado = false;
 $(function(){
   //----VARIABLES Y FUNCIONES DEL DISEÑO ADAPTATIVO -----//
-
+  $(".container").css("height",$(window).height());
   inicioOrganizacion();
   if (isMobile()) {
+    $(".input-contenedor button").html("<i class='material-icons right'>send</i>")
     $("body").swipe({
       swipe:function(event, direction, distance, duration, fingerCount){
         slideContactos(direction);
-      }
+      },
+      allowPageScroll:"vertical"
     })
     $(".titulo-chat button").on("click", function(){
       slideContactos("left");

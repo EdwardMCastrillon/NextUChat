@@ -2,7 +2,4 @@ node_modules
 *.env
 *.log
 .DS_Store
-<<<<<<< HEAD
-=======
 Storage/data
->>>>>>> 1e51ae3afc295da313f87e1672b5077d39fa44fa

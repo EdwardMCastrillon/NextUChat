@@ -1,12 +1,16 @@
 .container{
-  width: 90%;
+  width: 80%;
+  height: auto;
+}
+.row{
+  margin-bottom: 0px;
 }
 .card-panel{
-  height: 90vh;
+  height: 700px;
   padding: 0;
 }
 .superior{
-  height: 80%;
+  height: 85%;
 }
 .inferior{
   height: 20%;
@@ -29,17 +33,14 @@
   height: 20%;
   background: #01266C;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .titulo-chat h2{
+  width: 70%;
   margin-left: 20px;
 }
-.titulo-chat a i{
-  margin-top: 30px;
-}
-.titulo-chat a{
-  margin-right: 20px;
-  color: #fff;
+.titulo-chat button{
+  margin-top: 4vh;
 }
 
 .historial-chat{
@@ -126,12 +127,12 @@
   font-size: 2rem;
 }
 .input-contenedor{
-  padding: 40px;
+  padding: 20px;
 }
 .input-contenedor textarea{
   background: #9FC3D2;
   height: auto;
-  min-height: 40px;
+  min-height: 8vh;
   width: 100%;
   resize: none;
   font-size: 1.2rem;
@@ -144,9 +145,17 @@
   color: #000;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 992px) {
   .mensaje .imagen{
     width: 30%;
+  }
+  .card-panel{
+    height: 600px;
+    padding: 0;
+  }
+  .container{
+    width: 95%;
+    height: auto;
   }
 
 

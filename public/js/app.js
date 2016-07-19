@@ -1,7 +1,7 @@
 //-----FUNCIONES DEL DISEÑO ADAPTATIVO------//
 function isMobile(){
   var screenSize = screen.width;
-  if(screenSize<600){
+  if(screenSize<992){
     return true
   }else return false;
 }
@@ -25,6 +25,32 @@ function organizarMensaje(){
 
 }
 
+function slideContactos(direction){
+  if (desplegado==false) {
+    if (direction=="left") {
+      $(".right-side")
+      .removeClass("hide-on-small-only")
+      .css({
+        position: "absolute",
+        zIndex: "3",
+        right: "0px",
+        display: "none"
+      })
+      .show("slide", { direction: "right" },300)
+      desplegado=true;
+    }
+
+  }else{
+    if (direction=="right") {
+      $(".right-side").hide("slide", { direction: "right" }, 300)
+
+      desplegado=false;
+    }
+
+
+  }
+}
+
 (function(document, window, undefined, $, io){
   (function () {
     return Chat = {
@@ -46,12 +72,12 @@ function organizarMensaje(){
         var self = this
         var endpoint = self.apiUrl + '/users'
         self.ajaxRequest(endpoint, 'GET', {})
-            .done(function(data) {
-              var users = data.current
-              self.renderUsers(users)
-            }).fail(function(err) {
-              console.log(err)
-            })
+        .done(function(data) {
+          var users = data.current
+          self.renderUsers(users)
+        }).fail(function(err) {
+          console.log(err)
+        })
       },
 
       ajaxRequest: function(url, type, data) {
@@ -67,24 +93,24 @@ function organizarMensaje(){
         var endpoint = self.apiUrl + '/users'
         var userObj = { user: user }
         self.ajaxRequest(endpoint, 'POST', userObj)
-            .done(function(confirm) {
-              alert(confirm)
-            }).fail(function(error) {
-              alert(error)
-            })
+        .done(function(confirm) {
+          alert(confirm)
+        }).fail(function(error) {
+          alert(error)
+        })
       },
 
       renderUsers: function(users) {
         var self = this
         var userList = $('.users-list')
         var userTemplate = '<li class="collection-item avatar">'+
-                              '<img src="image/:image:" class="circle">'+
-                              '<span class="title">:nombre:</span>'+
-                              '<p><img src="image/online.png"/> En línea </p>'+
-                            '</li>'
+        '<img src="image/:image:" class="circle">'+
+        '<span class="title">:nombre:</span>'+
+        '<p><img src="image/online.png"/> En línea </p>'+
+        '</li>'
         users.map(function(user) {
           var newUser = userTemplate.replace(':image:', 'p2.jpg')
-                                    .replace(':nombre:', user.nombre)
+          .replace(':nombre:', user.nombre)
           userList.append(newUser)
         })
       },
@@ -111,38 +137,20 @@ function organizarMensaje(){
   Chat.Init()
 })(document, window, undefined, jQuery, io)
 
+
+var desplegado = false;
 $(function(){
   //----VARIABLES Y FUNCIONES DEL DISEÑO ADAPTATIVO -----//
-  var desplegado = false;
+
   inicioOrganizacion();
   if (isMobile()) {
     $("body").swipe({
       swipe:function(event, direction, distance, duration, fingerCount){
-        if (!desplegado) {
-          $(".right-side").removeClass("hide-on-small-only");
-          $(".collection").css({
-            position: "absolute",
-            display: "block"
-          }).animate({
-            left: "40px",
-            top: "0"
-          },500)
-          desplegado = true;
-        } else {
-          $(".collection")
-          .animate({
-            left: "500px",
-            top: "0"
-          }, 500, function(){
-            $(this).css({
-              position: "relative",
-              display: "block"
-            })
-            $(".right-side").addClass("hide-on-small-only");
-            desplegado=false;
-          })
-        }
+        slideContactos(direction);
       }
-    });
+    })
+    $(".titulo-chat button").on("click", function(){
+      slideContactos("left");
+    })
   }
 })

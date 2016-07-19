@@ -96,7 +96,7 @@ function slideContactos(direction){
         var userObj = { user: user }
         self.ajaxRequest(endpoint, 'POST', userObj)
         .done(function(confirm) {
-          alert(confirm)
+          console.log(confirm)
         }).fail(function(error) {
           alert(error)
         })

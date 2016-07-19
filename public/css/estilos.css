@@ -37,10 +37,10 @@
 }
 .titulo-chat h2{
   width: 70%;
-  margin-left: 20px;
+  font-size: 3em;
 }
 .titulo-chat button{
-  margin-top: 4vh;
+  margin-top: 25px;
 }
 
 .historial-chat{
@@ -128,21 +128,26 @@
 }
 .input-contenedor{
   padding: 20px;
+  height: 90%;
 }
 .input-contenedor textarea{
   background: #9FC3D2;
   height: auto;
-  min-height: 8vh;
+  min-height: 100%;
   width: 100%;
   resize: none;
   font-size: 1.2rem;
 }
 .input-contenedor button{
   background: #9FC3D2;
+  font-size: 12px;
 }
 .input-contenedor button:hover{
   background: #EBE9A4;
   color: #000;
+}
+.row .col.s10{
+  height: 100%;
 }
 
 @media (max-width: 992px) {
@@ -150,12 +155,21 @@
     width: 30%;
   }
   .card-panel{
-    height: 600px;
+    height: 90%;
     padding: 0;
   }
   .container{
     width: 95%;
-    height: auto;
+  }
+
+  .input-contenedor{
+    padding: 10px;
+  }
+  .input-contenedor button{
+    float: right;
+  }
+  .input-contenedor button:hover{
+    background: #9FC3D2;
   }
 
 

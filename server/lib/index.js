@@ -8,10 +8,10 @@ function deleteUser(user, callback) {
   })
   console.log(resultUsers)
   var usersDataPath = path.join(__dirname, '../') + '/Storage/data/users.json'
-  fs.writeFile(usersDataPath, JSON.stringify(Users), function(error) {
-    if (error) callback(error)
-    callback(null, 'OK')
-  })
+  // fs.writeFile(usersDataPath, JSON.stringify(Users), function(error) {
+  //   if (error) callback(error)
+  //   callback(null, 'OK')
+  // })
 }
 
 module.exports = deleteUser

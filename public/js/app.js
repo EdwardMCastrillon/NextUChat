@@ -103,23 +103,30 @@ function slideContactos(direction){
         var self = this
         self.$messageText.on('keypress', function(e) {
           if (e.which === 13) {
-            var message = {
-              sender: self.userName,
-              text: $(this).val()
-            }
-            self.renderMessage(message)
-            self.socket.emit('message', message)
-            $(this).val('')
+            debugger
+            if ($(this).val().trim()!='') {
+              var message = {
+                sender: self.userName,
+                text: $(this).val()
+              }
+              self.renderMessage(message)
+              self.socket.emit('message', message)
+              $(this).val('')
+            }else e.preventDefault()
+
           }
         })
         self.$btnMessages.on('click', function() {
-          var message = {
-            sender: self.userName,
-            text: self.$messageText.val()
+          if (self.$messageText.val()!='') {
+            var message = {
+              sender: self.userName,
+              text: self.$messageText.val()
+            }
+            self.renderMessage(message)
+            self.socket.emit('message', message)
+            self.$messageText.val('')
           }
-          self.renderMessage(message)
-          self.socket.emit('message', message)
-          self.$messageText.val('')
+
         })
       },
 
@@ -147,6 +154,8 @@ function slideContactos(direction){
                                         .replace(':mensaje:', message.text)
                                         .replace(':hora:', currentDate.getHours() + ':' + currentDate.getMinutes())
         messageList.append(newMessage)
+        $(".scroller-chat").animate({ scrollTop: $(".scroller-chat").get(0).scrollHeight }, 500)
+
       },
 
       joinUser: function(user) {

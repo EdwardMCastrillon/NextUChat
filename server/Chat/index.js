@@ -23,24 +23,40 @@ Router.get('/messages', function(req, res) {
 
 Router.post('/users', function(req, res) {
   var user = req.body.user
-  var oldUsers = require('../Storage/data/users.json')
-  Storage.saveData('users', user, oldUsers)
-      .then(function(message) {
-        res.json(message)
-      }).catch(function(error) {
-        res.sendStatus(500).json(error)
-      })
+  Storage.getData('users')
+        .then(function(users) {
+          return new Promise(function (resolve, reject) {
+            Storage.saveData('users', user, users)
+                  .then(function(message) {
+                    resolve(message)
+                  }).catch(function(err) {
+                    reject(err)
+                  })
+          })
+        }).then(function(message) {
+          res.json(message)
+        }).catch(function(err) {
+          res.sendStatus(500).json(err)
+        })
 })
 
 Router.post('/messages', function(req, res) {
   var message = req.body.message
-  var oldMessages = require('../Storage/data/messages.json')
-  Storage.saveData('messages', message, oldMessages)
-      .then(function(message) {
-        res.json(message)
-      }).catch(function(error) {
-        res.sendStatus(500).json(error)
-      })
+  Storage.getData('users')
+        .then(function(messages) {
+          return new Promise(function (resolve, reject) {
+            Storage.saveData('messages', message, messages)
+                  .then(function(message) {
+                    resolve(message)
+                  }).catch(function(err) {
+                    reject(err)
+                  })
+          })
+        }).then(function(message) {
+          res.json(message)
+        }).catch(function(err) {
+          res.sendStatus(500).json(err)
+        })
 })
 
 module.exports = Router

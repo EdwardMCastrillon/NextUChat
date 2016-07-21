@@ -8,6 +8,7 @@ function isMobile(){
 
 function inicioOrganizacion(){
   if (isMobile()==true) {
+    $('#btnMessage').attr('class', 'btn-floating hide-on-large-only')
     organizarMensaje();
   }
 }
@@ -55,7 +56,10 @@ function slideContactos(direction){
   (function () {
     return Chat = {
       apiUrl: '/chat',
-      userDataModal: $('#modalCaptura'),
+      $userDataModal: $('#modalCaptura'),
+      $btnMessages: $('#btnMessage'),
+      $messageText: $('#messageText'),
+      userName: '',
       socket: io(),
 
       Init: function() {
@@ -63,8 +67,15 @@ function slideContactos(direction){
         this.fetchUserInfo(function (user) {
           self.renderUsers(user)
         })
+        this.watchMessages()
         self.socket.on('userJoin', function(user) {
           self.renderUsers([user])
+        })
+        self.socket.on('message', function(message) {
+          self.renderMessage(message)
+        })
+        self.socket.on('leaveUser', function(user) {
+          self.leaveUser(user)
         })
       },
 
@@ -88,31 +99,79 @@ function slideContactos(direction){
         })
       },
 
-      watchMessages: function() {},
+      watchMessages: function() {
+        var self = this
+        self.$messageText.on('keypress', function(e) {
+          if (e.which === 13) {
+            var message = {
+              sender: self.userName,
+              text: $(this).val()
+            }
+            self.renderMessage(message)
+            self.socket.emit('message', message)
+            $(this).val('')
+          }
+        })
+        self.$btnMessages.on('click', function() {
+          var message = {
+            sender: self.userName,
+            text: self.$messageText.val()
+          }
+          self.renderMessage(message)
+          self.socket.emit('message', message)
+          self.$messageText.val('')
+        })
+      },
+
+      renderMessage: function(message) {
+        var self = this
+        var tipoMensaje = message.sender == self.userName ? 'recibidos' : 'enviados'
+        var messageList = $('.historial-chat')
+        var messageTemplate = '<div class=":tipoMensaje:">'+
+                                '<div class="mensaje">'+
+                                  '<div class="imagen">'+
+                                    '<img src="image/p2.jpg" alt="Contacto"/>'+
+                                  '</div>'+
+                                  '<div class="texto">'+
+                                    '<span class="nombre">:nombre:</span><br>'+
+                                    '<span>:mensaje:</span>'+
+                                  '</div>'+
+                                  '<div class="hora">'+
+                                    '<span class="numHora">:hora:</span>'+
+                                  '</div>'+
+                                '</div>'+
+                              '</div>';
+        var currentDate = new Date()
+        var newMessage = messageTemplate.replace(':tipoMensaje:', tipoMensaje)
+                                        .replace(':nombre:', message.sender)
+                                        .replace(':mensaje:', message.text)
+                                        .replace(':hora:', currentDate.getHours() + ':' + currentDate.getMinutes())
+        messageList.append(newMessage)
+      },
 
       joinUser: function(user) {
         var self = this
         var endpoint = self.apiUrl + '/users'
         var userObj = { user: user }
         self.ajaxRequest(endpoint, 'POST', userObj)
-        .done(function(confirm) {
-          console.log(confirm)
-        }).fail(function(error) {
-          alert(error)
-        })
+            .done(function(confirm) {
+              console.log(confirm)
+            }).fail(function(error) {
+              alert(error)
+            })
       },
 
       renderUsers: function(users) {
         var self = this
         var userList = $('.users-list')
         var userTemplate = '<li class="collection-item avatar">'+
-        '<img src="image/:image:" class="circle">'+
-        '<span class="title">:nombre:</span>'+
-        '<p><img src="image/online.png"/> En línea </p>'+
-        '</li>'
+                              '<img src="image/:image:" class="circle">'+
+                              '<span class="title">:nombre:</span>'+
+                              '<p><img src="image/online.png"/> En línea </p>'+
+                          '</li>'
         users.map(function(user) {
           var newUser = userTemplate.replace(':image:', 'p2.jpg')
-          .replace(':nombre:', user.nombre)
+                                    .replace(':nombre:', user.nombre)
           userList.append(newUser)
         })
       },
@@ -120,7 +179,7 @@ function slideContactos(direction){
       fetchUserInfo: function(callback) {
         var self = this
 
-        this.userDataModal.openModal()
+        this.$userDataModal.openModal()
         var $GuardaInfo = $('.guardaInfo')
         $GuardaInfo.on('click', function() {
           var nombre = $('.nombreUsuario').val()
@@ -128,7 +187,8 @@ function slideContactos(direction){
           self.socket.emit('userJoin', user[0])
           callback(user)
           self.joinUser(user[0])
-          self.userDataModal.closeModal()
+          self.userName = nombre
+          self.$userDataModal.closeModal()
         })
 
         self.getInitialUsers()

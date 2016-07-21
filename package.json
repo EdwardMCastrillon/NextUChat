@@ -1,6 +1,6 @@
 {
   "name": "nextuchat",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "a simple chat created for the next u web development program",
   "main": "index.js",
   "scripts": {

@@ -42,46 +42,6 @@
             <button class="btn-floating blue lighten-1 hide-on-large-only"><i class="material-icons">reorder</i></button>
           </div>
           <div class="historial-chat row">
-            <!-- PARA UN MENSAJE ENVIADO -->
-            <div class="enviados">
-              <div class="mensaje">
-                <div class="imagen">
-                  <!-- Imagen Contacto de mensaje enviado -->
-                  <img src="image/p1.jpg" alt="Contacto"/>
-                </div>
-                <div class="texto">
-                  <!-- Texto nombre contacto de mensaje enviado -->
-                  <span class="nombre">Yurani </span><br>
-                  <!-- Texto del mensaje -->
-                  <span>Hola, que tal</span>
-                </div>
-                <div class="hora">
-                  <!-- Hora enviado el mensaje -->
-                  <span class="numHora">17:05</span>
-                </div>
-              </div>
-            </div>
-            <!-- FIN MENSAJE ENVIADO -->
-
-            <!-- PARA UN MENSAJE RECIBIDO -->
-            <div class="recibidos">
-              <div class="mensaje">
-                <div class="imagen">
-                  <!-- Imagen Contacto de mensaje recibido  -->
-                  <img src="image/p2.jpg" alt="Contacto"/>
-                </div>
-                <div class="texto">
-                  <!-- Texto nombre contacto de mensaje recibido -->
-                  <span class="nombre">El Che </span><br>
-                  <!-- Texto del mensaje -->
-                  <span>Cómo estas?</span>
-                </div>
-                <div class="hora">
-                  <!-- Hora enviado el mensaje -->
-                  <span class="numHora">17:08</span>
-                </div>
-              </div>
-            </div>
 
 
           </div>
@@ -89,14 +49,6 @@
         <div class="col m3 l3 hide-on-small-only right-side">
           <ul class="users-list collection with-header">
             <li class="collection-header">Contactos</li>
-            <!-- CONTACTO -->
-            <li class="collection-item avatar">
-              <img src="image/p1.jpg" class="circle">
-              <span class="title">Bot</span>
-              <p><img src="image/online.png"/> En línea </p>
-            </li>
-            <!-- FIN CONTACTO -->
-
           </ul>
         </div>
       </div>
@@ -104,14 +56,13 @@
         <div class="col s10 m10 l9">
           <div class="input-contenedor">
             <!-- Input del mensaje -->
-            <textarea name="mensaje-a-enviar" id="mensaje-input"></textarea>
+            <textarea name="mensaje-a-enviar" id="messageText"></textarea>
           </div>
         </div>
         <div class="col s2 m2 l3 enviar-container">
           <div class="input-contenedor">
             <!-- Botón enviar del mensaje -->
-            <button type="button" name="enviar" class="btn default-btn hide-on-med-and-down"><i class="material-icons right">send</i>Enviar</button>
-            <button type="button" name="enviar" class="btn-floating hide-on-large-only"><i class="material-icons right">send</i>Enviar</button>
+            <button type="button" name="enviar" id="btnMessage" class="btn default-btn hide-on-med-and-down"><i class="material-icons right">send</i>Enviar</button>
 
           </div>
         </div>

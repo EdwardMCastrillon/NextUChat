@@ -103,11 +103,10 @@ function slideContactos(direction){
         var self = this
         self.$messageText.on('keypress', function(e) {
           if (e.which === 13) {
-            debugger
             if ($(this).val().trim()!='') {
               var message = {
-                sender: self.userName,
-                text: $(this).val()
+                sender: filterXSS(self.userName),
+                text: filterXSS($(this).val())
               }
               self.renderMessage(message)
               self.socket.emit('message', message)
@@ -119,8 +118,8 @@ function slideContactos(direction){
         self.$btnMessages.on('click', function() {
           if (self.$messageText.val()!='') {
             var message = {
-              sender: self.userName,
-              text: self.$messageText.val()
+              sender: filterXSS(self.userName),
+              text: filterXSS(self.$messageText.val())
             }
             self.renderMessage(message)
             self.socket.emit('message', message)

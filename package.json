@@ -4,7 +4,7 @@
   "description": "a simple chat created for the next u web development program",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/",
+    "start": "node server/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "NextU",
@@ -15,8 +15,5 @@
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
     "xss": "^0.2.13"
-  },
-  "devDependencies": {
-    "nodemon": "^1.9.2"
   }
 }

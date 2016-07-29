@@ -83,12 +83,12 @@ function slideContactos(direction){
         var self = this
         var endpoint = self.apiUrl + '/users'
         self.ajaxRequest(endpoint, 'GET', {})
-        .done(function(data) {
-          var users = data.current
-          self.renderUsers(users)
-        }).fail(function(err) {
-          console.log(err)
-        })
+            .done(function(data) {
+              var users = data.current
+              self.renderUsers(users)
+            }).fail(function(err) {
+              console.log(err)
+            })
       },
 
       ajaxRequest: function(url, type, data) {

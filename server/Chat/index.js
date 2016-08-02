@@ -4,7 +4,7 @@ var Storage = require('../Storage')
 var Router = express.Router()
 
 Router.get('/users', function(req, res) {
-  Storage.getData('users')
+  Storage.findUsers()
           .then(function(users) {
             res.json(users)
           }).catch(function(error) {
@@ -13,7 +13,7 @@ Router.get('/users', function(req, res) {
 })
 
 Router.get('/messages', function(req, res) {
-  Storage.getData('messages')
+  Storage.findMessages()
           .then(function(messages) {
             res.json(messages)
           }).catch(function(error) {
@@ -23,26 +23,18 @@ Router.get('/messages', function(req, res) {
 
 Router.post('/users', function(req, res) {
   var user = req.body.user
-  Storage.getData('users')
+  Storage.saveUser(user)
         .then(function(users) {
-          return new Promise(function (resolve, reject) {
-            Storage.saveData('users', user, users)
-                  .then(function(message) {
-                    resolve(message)
-                  }).catch(function(err) {
-                    reject(err)
-                  })
-          })
-        }).then(function(message) {
-          res.json(message)
-        }).catch(function(err) {
+          res.json(users)
+        })
+        .catch(function(err) {
           res.sendStatus(500).json(err)
         })
 })
 
 Router.post('/messages', function(req, res) {
   var message = req.body.message
-  Storage.getData('users')
+  Storage.saveMessage(message)
         .then(function(messages) {
           return new Promise(function (resolve, reject) {
             Storage.saveData('messages', message, messages)

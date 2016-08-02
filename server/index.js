@@ -2,6 +2,7 @@ var bodyParser = require('body-parser'),
     http       = require('http'),
     express    = require('express'),
     socketio   = require('socket.io'),
+    mongoose   = require('mongoose'),
     chat       = require('./Chat'),
     deleteUser = require('./lib')
 
@@ -9,6 +10,8 @@ var port   = port = process.env.PORT || 3000,
     app    = express(),
     Server = http.createServer(app),
     io     = socketio(Server)
+
+mongoose.connect('mongodb://localhost/nextuchat')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

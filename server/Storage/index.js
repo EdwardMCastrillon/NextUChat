@@ -1,30 +1,44 @@
 var fs = require('fs'),
     path = require('path')
+    Models = require('./models')
 
+var Mensajes = Models.Mensaje
+var Usuarios = Models.Usuario
 
 module.exports = {
-  getData: function(dataType) {
-    var dataPath = dataType == 'users' ?
-                 __dirname + path.join('/data/users.json') :
-                 __dirname + path.join('/data/messages.json')
-    return new Promise(function (resolve, reject) {
-      fs.readFile(dataPath, 'utf8', function(err, readData) {
+  findUsers: function() {
+    return new Promise(function(resolve, reject) {
+      Usuarios.find().exec(function(err, docs) {
         if (err) reject(err)
-        resolve(JSON.parse(readData))
+        resolve(docs)
       })
     })
   },
 
-  saveData: function(dataType, newData, data) {
-    var dataPath = dataType == 'users' ?
-               __dirname + path.join('/data/users.json') :
-               __dirname + path.join('/data/messages.json')
-    data.current.push(newData)
-    return new Promise(function (resolve, reject) {
-      fs.writeFile(dataPath, JSON.stringify(data), function(err) {
+  findMessages: function() {
+    return new Promise(function(resolve, reject) {
+      Mensajes.find().exec(function(err, docs) {
         if (err) reject(err)
-        resolve('OK')
+        resolve(docs)
       })
     })
   },
+
+  saveUser: function(user) {
+    return new Promise(function(resolve, reject) {
+      var newUser = new Usuarios(user)
+      newUser.save()
+      resolve({message: 'user created'})
+    })
+  },
+
+  saveMessage: function(message) {
+    return new Promise(function(resolve, reject) {
+      var newMessage = new Mensajes(message)
+      newMessage.save(function(err) {
+        if (err) reject(err)
+        resolve('Message Create')
+      })
+    })
+  }
 }

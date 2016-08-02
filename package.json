@@ -12,6 +12,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "moment": "^2.14.1",
+    "mongoose": "^4.5.7",
     "querystring": "0.2.0",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",

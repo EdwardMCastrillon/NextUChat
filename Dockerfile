@@ -1,12 +1,11 @@
 # Get Node.js latest LTS
 FROM node:argon
 
-# Create app directory
-RUN mkdir -p /usr/src/nextuchat
-WORKDIR /usr/src/nextuchat
+# Set WORKDIR
+WORKDIR /Users/Emonsalve/Desktop/nextuchat
 
 # Copy the app folder
-COPY . /usr/src/nextuchat
+COPY . .
 
 EXPOSE 8081
 RUN npm install

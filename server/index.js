@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/chat', chat)
 app.use(express.static('public'))
 
-io.on('connection', function(socket) {
+io.on('connection', (socket) => {
   console.log('new User connected, with socket: ' + socket.id)
 
   socket.on('userJoin', function(user) {

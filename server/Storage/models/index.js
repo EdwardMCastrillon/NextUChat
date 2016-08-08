@@ -10,7 +10,7 @@ var allSchemas = {
 
   UserSchema: new Schema({
     nombre: { type: String, required: true, unique: true },
-    image: { type: String }
+    img: { type: String }
   })
 }
 

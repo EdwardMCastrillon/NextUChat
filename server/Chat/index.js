@@ -1,53 +1,44 @@
-var express = require('express')
-var Storage = require('../Storage')
+const express = require('express'),
+      Storage = require('../Storage')
 
-var Router = express.Router()
+const Router = express.Router()
 
-Router.get('/users', function(req, res) {
+Router.get('/users', (req, res) => {
   Storage.findUsers()
-          .then(function(users) {
+          .then(users => {
             res.json(users)
-          }).catch(function(error) {
+          }).catch(error => {
             res.sendStatus(500).json(error)
           })
 })
 
-Router.get('/messages', function(req, res) {
+Router.get('/messages', (req, res) => {
   Storage.findMessages()
-          .then(function(messages) {
+          .then(messages => {
             res.json(messages)
-          }).catch(function(error) {
+          }).catch(error => {
             res.sendStatus(500).json(error)
           })
 })
 
-Router.post('/users', function(req, res) {
-  var user = req.body.user
-  console.log(user)
+Router.post('/users', (req, res) => {
+  let user = req.body.user
   Storage.saveUser(user)
-        .then(function(confirmation) {
+        .then(confirmation => {
           res.json(confirmation)
         })
-        .catch(function(err) {
+        .catch(err => {
           res.sendStatus(500).json(err)
         })
 })
 
-Router.post('/messages', function(req, res) {
-  var message = req.body.message
+Router.post('/messages', (req, res) => {
+  let message = req.body.message
   Storage.saveMessage(message)
-        .then(function(messages) {
-          return new Promise(function (resolve, reject) {
-            Storage.saveData('messages', message, messages)
-                  .then(function(message) {
-                    resolve(message)
-                  }).catch(function(err) {
-                    reject(err)
-                  })
-          })
-        }).then(function(message) {
-          res.json(message)
-        }).catch(function(err) {
+        .then(confirmation => {
+          res.json(confirmation)
+        })
+        .catch(err => {
           res.sendStatus(500).json(err)
         })
 })

@@ -91,11 +91,12 @@
 }
 .recibidos .imagen{
   order: 3;
-}
+} 
 .recibidos .hora{
   order: 1;
 }
 .recibidos .texto{
+  word-wrap: break-word;
   order: 2;
   text-align: right;
 }
@@ -106,6 +107,7 @@
   text-align: center;
 }
 .mensaje .texto{
+  word-wrap: break-word;
   width: 70%;
   margin: 0px 5px;
 }

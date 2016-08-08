@@ -200,6 +200,16 @@ function slideContactos(direction){
         })
 
         self.getInitialUsers()
+      },
+
+      leaveUser: function(user) {
+        var self = this
+        var currentUsers = $('.collection-item')
+                             .find('.title')
+        $.each(currentUsers, function(i, el) {
+          var $el = $(el)
+          if ( $el.text() === user.nombre ) $el.parent().remove()
+        })
       }
     }
   })()

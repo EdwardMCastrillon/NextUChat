@@ -1,15 +1,15 @@
-var bodyParser = require('body-parser'),
-    http       = require('http'),
-    express    = require('express'),
-    socketio   = require('socket.io'),
-    mongoose   = require('mongoose'),
-    chat       = require('./Chat'),
-    deleteUser = require('./lib')
+const bodyParser = require('body-parser'),
+      http       = require('http'),
+      express    = require('express'),
+      socketio   = require('socket.io'),
+      mongoose   = require('mongoose'),
+      chat       = require('./Chat'),
+      deleteUser = require('./lib')
 
-var port   = port = process.env.PORT || 3000,
-    app    = express(),
-    Server = http.createServer(app),
-    io     = socketio(Server)
+const port   = process.env.PORT || 3000,
+      app    = express(),
+      Server = http.createServer(app),
+      io     = socketio(Server)
 
 mongoose.connect('mongodb://localhost/nextuchat')
 
@@ -21,24 +21,24 @@ app.use(express.static('public'))
 io.on('connection', (socket) => {
   console.log('new User connected, with socket: ' + socket.id)
 
-  socket.on('userJoin', function(user) {
+  socket.on('userJoin', user => {
     socket.user = user
     socket.broadcast.emit('userJoin', user)
   })
 
-  socket.on('message', function(message) {
+  socket.on('message', message => {
     socket.broadcast.emit('message', message)
   })
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', () => {
     if (socket.hasOwnProperty('user')) {
-      deleteUser(socket.user, function(err, confirm) {
+      let user = socket.user
+      deleteUser(user, (err, confirm) => {
         if (err) throw err
+        socket.broadcast.emit('leaveUser', user)
       })
     }
   })
 })
 
-Server.listen(port, function() {
-  console.log('Server is running on port: '+port)
-})
+Server.listen(port,() => console.log(`Server is running on port: ${port}`))

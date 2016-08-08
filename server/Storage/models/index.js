@@ -9,7 +9,7 @@ var allSchemas = {
   }),
 
   UserSchema: new Schema({
-    name: { type: String, required: true, unique: true },
+    nombre: { type: String, required: true, unique: true },
     image: { type: String }
   })
 }

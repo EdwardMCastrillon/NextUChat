@@ -40,5 +40,14 @@ module.exports = {
         resolve('Message Create')
       })
     })
+  },
+
+  deleteUser: function(username) {
+    return new Promise(function(resolve, reject) {
+      Usuarios.remove({ nombre: username }, function(err) {
+        if (err) reject(err)
+        resolve({ message: 'Removed!' })
+      })
+    })
   }
 }

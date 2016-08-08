@@ -23,9 +23,10 @@ Router.get('/messages', function(req, res) {
 
 Router.post('/users', function(req, res) {
   var user = req.body.user
+  console.log(user)
   Storage.saveUser(user)
-        .then(function(users) {
-          res.json(users)
+        .then(function(confirmation) {
+          res.json(confirmation)
         })
         .catch(function(err) {
           res.sendStatus(500).json(err)

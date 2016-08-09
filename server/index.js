@@ -26,9 +26,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('userJoin', user)
   })
 
-  socket.on('message', message => {
-    socket.broadcast.emit('message', message)
-  })
+  socket.on('message', message => socket.broadcast.emit('message', message))
 
   socket.on('disconnect', () => {
     if (socket.hasOwnProperty('user')) {

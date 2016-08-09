@@ -1,5 +1,5 @@
 # Get Node.js latest LTS
-FROM node:argon
+FROM node:6.2.1
 RUN mkdir -p /app
 ADD package.json /app
 WORKDIR /app

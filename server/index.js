@@ -11,14 +11,16 @@ const port   = process.env.PORT || 3000,
       Server = http.createServer(app),
       io     = socketio(Server)
 
-mongoose.connect('mongodb://localhost/nextuchat')
+let mongoURI = process.env.ENVIRONMENT ? 'mongo' : 'localhost'
+
+mongoose.connect(`mongodb://${mongoURI}/nextuchat`)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/chat', chat)
 app.use(express.static('public'))
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('new User connected, with socket: ' + socket.id)
 
   socket.on('userJoin', user => {

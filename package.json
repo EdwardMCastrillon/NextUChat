@@ -4,6 +4,7 @@
   "description": "a simple chat created for the next u web development program",
   "main": "index.js",
   "scripts": {
+    "start": "node server/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "NextU",

@@ -103,7 +103,7 @@ function slideContactos(direction){
         var self = this
         self.$messageText.on('keypress', function(e) {
           if (e.which === 13) {
-            if ($(this).val().trim()!='') {
+            if ($(this).val().trim() != '') {
               var message = {
                 sender: filterXSS(self.userName),
                 text: filterXSS($(this).val())

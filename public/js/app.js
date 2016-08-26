@@ -110,6 +110,14 @@ function slideContactos(direction){
               }
               self.renderMessage(message)
               self.socket.emit('message', message)
+              // Register a message in a json file.
+              self.ajaxRequest('/messages', 'POST', { message: message })
+                  .done(function(confirmation) {
+                    console.log(confirmation)
+                  })
+                  .fail(function(error) {
+                    alert(error)
+                  })
               $(this).val('')
             }else e.preventDefault()
 
